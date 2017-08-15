@@ -22,30 +22,31 @@ public class CalculadoraDePrecos {
 		
 		if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.CINEMA) || sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.SHOW)) {
 			//quando estiver acabando os ingressos... 
-			if(passouDoLimiteVendas(sessao, 0.05)) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
+			if(passouDoLimiteVendas(sessao, 0.05)) {
+				
+				preco = incrementaPreco(sessao.getPreco(), 0.10);
 			} else {
 				preco = sessao.getPreco();
 			}
 		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.BALLET)) {
-			if(passouDoLimiteVendas(sessao, 0.50)) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.20)));
+			if(passouDoLimiteVendas(sessao, 0.50)) {
+				preco = incrementaPreco(sessao.getPreco(), 0.20);
 			} else {
 				preco = sessao.getPreco();
 			}
 			
 			if(sessao.getDuracaoEmMinutos() > 60){
-				preco = preco.add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
+				preco = incrementaPreco(sessao.getPreco(), 0.10);
 			}
 		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.ORQUESTRA)) {
 			if(passouDoLimiteVendas(sessao, 0.50)) { 
-				preco = sessao.getPreco().add(sessao.getPreco().multiply(BigDecimal.valueOf(0.20)));
+				preco = incrementaPreco(sessao.getPreco(), 0.20);
 			} else {
 				preco = sessao.getPreco();
 			}
 
 			if(sessao.getDuracaoEmMinutos() > 60){
-				preco = preco.add(sessao.getPreco().multiply(BigDecimal.valueOf(0.10)));
+				preco = incrementaPrecoAcumulado(preco, sessao.getPreco(), 0.10);
 			}
 		}  else {
 			//nao aplica aumento para teatro (quem vai é pobretão)
@@ -54,6 +55,14 @@ public class CalculadoraDePrecos {
 		
 		return preco;
 		
+	}
+
+	private static BigDecimal incrementaPreco(BigDecimal preco, double porcentagemDeAumento) {
+		return preco.add(preco.multiply(BigDecimal.valueOf(porcentagemDeAumento)));
+	}
+	
+	private static BigDecimal incrementaPrecoAcumulado(BigDecimal acumulado, BigDecimal precoOriginal, double porcentagem) {
+		return acumulado.add(precoOriginal.multiply(BigDecimal.valueOf(porcentagem)));
 	}
 
 	private static boolean passouDoLimiteVendas(Sessao sessao, double limite) {
