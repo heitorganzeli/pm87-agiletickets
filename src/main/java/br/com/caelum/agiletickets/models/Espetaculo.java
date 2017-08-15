@@ -107,7 +107,9 @@ public class Espetaculo {
 		
 		System.out.println(periodo);
 		
-		for (int i = 0; i < periodo; i++) {
+		int incremento = periodicidade.equals(Periodicidade.DIARIA)? 1: 7;
+		
+		for (int i = 0; i < periodo;  i+=incremento) {
 			Sessao sessao = new Sessao();
 			
 			sessao.setInicio(inicio.plusDays(i).toDateTime(horario));

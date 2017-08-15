@@ -89,7 +89,7 @@ public class EspetaculoTest {
 	}
 	
 	@Test
-	public void criarTresSessoes() {
+	public void criarTresSessoesDiarias() {
 		Espetaculo ivete = new Espetaculo();
 		
 		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 03), new LocalTime(17, 0), Periodicidade.DIARIA);
@@ -117,6 +117,17 @@ public class EspetaculoTest {
 		assertEquals("17:00", sessoes.get(0).getHora());
 		
 	}
+	
+	@Test
+	public void criar5SessoesSemanais() {
+		Espetaculo ivete = new Espetaculo();
+		
+		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 31), new LocalTime(17, 0), Periodicidade.SEMANAL);
+		
+		assertEquals(5 , sessoes.size());
+	}
+	
+	
 	
 	
 }
