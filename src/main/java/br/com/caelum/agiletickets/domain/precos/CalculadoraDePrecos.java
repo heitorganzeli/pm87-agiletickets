@@ -18,43 +18,23 @@ public class CalculadoraDePrecos {
 	}
 
 	private static BigDecimal calculaPrecoUnitario(Sessao sessao) {
-		BigDecimal preco;
 		
-		if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.CINEMA) || sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.SHOW)) {
-			//quando estiver acabando os ingressos... 
-			if(passouDoLimiteVendas(sessao, 0.05)) {
-				
-				preco = incrementaPreco(sessao.getPreco(), 0.10);
-			} else {
-				preco = sessao.getPreco();
-			}
-		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.BALLET)) {
-			if(passouDoLimiteVendas(sessao, 0.50)) {
-				preco = incrementaPreco(sessao.getPreco(), 0.20);
-			} else {
-				preco = sessao.getPreco();
-			}
-			
-			if(sessao.getDuracaoEmMinutos() > 60){
-				preco = incrementaPreco(sessao.getPreco(), 0.10);
-			}
-		} else if(sessao.getEspetaculo().getTipo().equals(TipoDeEspetaculo.ORQUESTRA)) {
-			if(passouDoLimiteVendas(sessao, 0.50)) { 
-				preco = incrementaPreco(sessao.getPreco(), 0.20);
-			} else {
-				preco = sessao.getPreco();
-			}
+		Calculadora calc = selecionaCalculadora(sessao.getEspetaculo().getTipo());
+		return calc.calculaPreco(sessao);
+		
+	}
 
-			if(sessao.getDuracaoEmMinutos() > 60){
-				preco = incrementaPrecoAcumulado(preco, sessao.getPreco(), 0.10);
-			}
-		}  else {
-			//nao aplica aumento para teatro (quem vai é pobretão)
-			preco = sessao.getPreco();
-		}
-		
-		return preco;
-		
+	private static Calculadora selecionaCalculadora(TipoDeEspetaculo tipo) {
+		if(tipo.equals(TipoDeEspetaculo.CINEMA) || tipo.equals(TipoDeEspetaculo.SHOW)) {
+			return new CalculadoraCinemaShow();
+		} 
+		if(tipo.equals(TipoDeEspetaculo.BALLET)) {
+			return new CalculadoraBallet();
+		}  
+		if(tipo.equals(TipoDeEspetaculo.ORQUESTRA)) {
+			return new CalculadoraOrquestra();
+		}   
+		return new CalculadoraPadrao();
 	}
 
 	private static BigDecimal incrementaPreco(BigDecimal preco, double porcentagemDeAumento) {
@@ -68,5 +48,72 @@ public class CalculadoraDePrecos {
 	private static boolean passouDoLimiteVendas(Sessao sessao, double limite) {
 		return (sessao.getTotalIngressos() - sessao.getIngressosReservados()) / sessao.getTotalIngressos().doubleValue() <= limite;
 	}
+	
+	private static interface Calculadora  {
+		
+		public BigDecimal calculaPreco (Sessao sessao);
+		
+	}
+	
+	private static class CalculadoraCinemaShow implements Calculadora {
 
+		@Override
+		public BigDecimal calculaPreco(Sessao sessao) {
+			if(passouDoLimiteVendas(sessao, 0.05)) {
+				return incrementaPreco(sessao.getPreco(), 0.10);
+			} else {
+				return sessao.getPreco();
+			}
+		}
+	}
+	
+	private static class CalculadoraOrquestra implements Calculadora {
+
+		@Override
+		public BigDecimal calculaPreco(Sessao sessao) {
+			BigDecimal preco;
+			if(passouDoLimiteVendas(sessao, 0.50)) { 
+				preco = incrementaPreco(sessao.getPreco(), 0.20);
+			} else {
+				preco = sessao.getPreco();
+			}
+
+			if(sessao.getDuracaoEmMinutos() > 60){
+				preco = incrementaPrecoAcumulado(preco, sessao.getPreco(), 0.10);
+			}
+			return preco;
+		}
+	}
+	
+	private static class CalculadoraBallet implements Calculadora {
+
+		@Override
+		public BigDecimal calculaPreco(Sessao sessao) {
+			BigDecimal preco;
+			
+			if(passouDoLimiteVendas(sessao, 0.50)) {
+				preco = incrementaPreco(sessao.getPreco(), 0.20);
+			} else {
+				preco = sessao.getPreco();
+			}
+			
+			if(sessao.getDuracaoEmMinutos() > 60){
+				preco = incrementaPreco(sessao.getPreco(), 0.10);
+			}
+			return preco;
+		}
+	}
+	
+	private static class CalculadoraPadrao implements Calculadora {
+
+		@Override
+		public BigDecimal calculaPreco(Sessao sessao) {
+			return sessao.getPreco();
+		}
+	}		
 }
+
+
+
+
+
