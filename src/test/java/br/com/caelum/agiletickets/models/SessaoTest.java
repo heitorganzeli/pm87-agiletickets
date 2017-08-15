@@ -2,6 +2,8 @@ package br.com.caelum.agiletickets.models;
 
 import org.junit.Assert;
 import org.junit.Test;
+import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 public class SessaoTest {
 
@@ -36,6 +38,16 @@ public class SessaoTest {
 
 		sessao.reserva(3);
 		Assert.assertEquals(2, sessao.getIngressosDisponiveis().intValue());
+	}
+	
+	@Test
+	public void ultimoLugarEhReservavel() {
+		Sessao sessao = new Sessao();
+		sessao.setTotalIngressos(1);
+		
+		boolean podeReservar = sessao.podeReservar(1);
+		
+		assertThat(podeReservar, is(true));
 	}
 	
 }
