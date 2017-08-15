@@ -1,2 +1,4 @@
 language: java
-before-install: ant resolve
+before-install: 
+    - sudo apt-get -qq update
+    - sudo apt-get install ant-optional
