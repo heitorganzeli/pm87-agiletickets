@@ -2,7 +2,14 @@ package br.com.caelum.agiletickets.models;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
+import java.util.List;
+
+import javax.lang.model.element.NestingKind;
+
+import org.joda.time.LocalDate;
+import org.joda.time.LocalTime;
 import org.junit.Test;
 
 public class EspetaculoTest {
@@ -80,5 +87,26 @@ public class EspetaculoTest {
 
 		return sessao;
 	}
+	
+	@Test
+	public void criarTresSessoes() {
+		Espetaculo ivete = new Espetaculo();
+		
+		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 03), new LocalTime(17, 0), Periodicidade.DIARIA);
+		
+		assertEquals(3 , sessoes.size());
+	}
+	
+	@Test
+	public void criarSessoesNosDiasEspecificados() {
+		Espetaculo ivete = new Espetaculo();
+		
+		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 03), new LocalTime(17, 0), Periodicidade.DIARIA);
+		
+		assertEquals("01/01/10", sessoes.get(0).getDia());
+		assertEquals("02/01/10", sessoes.get(1).getDia());
+		assertEquals("03/01/10", sessoes.get(2).getDia());
+	}
+	
 	
 }
