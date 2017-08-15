@@ -127,7 +127,18 @@ public class EspetaculoTest {
 		assertEquals(5 , sessoes.size());
 	}
 	
-	
+	@Test
+	public void criarSessoesSemanaisNosDiasEspecificados() {
+		Espetaculo ivete = new Espetaculo();
+		
+		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 31), new LocalTime(17, 0), Periodicidade.SEMANAL);
+		
+		assertEquals("01/01/10", sessoes.get(0).getDia());
+		assertEquals("08/01/10", sessoes.get(1).getDia());
+		assertEquals("15/01/10", sessoes.get(2).getDia());
+		assertEquals("22/01/10", sessoes.get(3).getDia());
+		assertEquals("29/01/10", sessoes.get(4).getDia());
+	}
 	
 	
 }
