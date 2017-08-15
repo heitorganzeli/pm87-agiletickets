@@ -108,5 +108,15 @@ public class EspetaculoTest {
 		assertEquals("03/01/10", sessoes.get(2).getDia());
 	}
 	
+	@Test
+	public void criarSessoesNoHorarioCorreto() {
+		Espetaculo ivete = new Espetaculo();
+		
+		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 03), new LocalTime(17, 0), Periodicidade.DIARIA);
+		
+		assertEquals("17:00", sessoes.get(0).getHora());
+		
+	}
+	
 	
 }
