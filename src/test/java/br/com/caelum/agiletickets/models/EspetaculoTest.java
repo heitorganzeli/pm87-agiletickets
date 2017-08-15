@@ -3,6 +3,7 @@ package br.com.caelum.agiletickets.models;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.util.List;
 
@@ -138,6 +139,24 @@ public class EspetaculoTest {
 		assertEquals("15/01/10", sessoes.get(2).getDia());
 		assertEquals("22/01/10", sessoes.get(3).getDia());
 		assertEquals("29/01/10", sessoes.get(4).getDia());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void erroInicioDepoisQueFim() {
+		Espetaculo ivete = new Espetaculo();
+		
+		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 31), new LocalDate(2010, 01, 01), new LocalTime(17, 0), Periodicidade.SEMANAL);
+		
+		fail();
+	}
+	
+	@Test
+	public void inicioEFimIguaisCriaUmaSessao() {
+		Espetaculo ivete = new Espetaculo();
+		
+		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 31), new LocalDate(2010, 01, 31), new LocalTime(17, 0), Periodicidade.SEMANAL);
+		
+		assertEquals(1 , sessoes.size());
 	}
 	
 	

@@ -105,7 +105,8 @@ public class Espetaculo {
 		
 		int periodo = Days.daysBetween(inicio, fim).getDays() + 1;
 		
-		System.out.println(periodo);
+		if (periodo <= 0)
+			throw new IllegalArgumentException("inicio maior que fim");
 		
 		int incremento = periodicidade.equals(Periodicidade.DIARIA)? 1: 7;
 		
