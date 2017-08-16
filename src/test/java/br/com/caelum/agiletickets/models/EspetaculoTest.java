@@ -145,7 +145,7 @@ public class EspetaculoTest {
 	public void erroInicioDepoisQueFim() {
 		Espetaculo ivete = new Espetaculo();
 		
-		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 31), new LocalDate(2010, 01, 01), new LocalTime(17, 0), Periodicidade.SEMANAL);
+		ivete.criaSessoes(new LocalDate(2010, 01, 31), new LocalDate(2010, 01, 01), new LocalTime(17, 0), Periodicidade.SEMANAL);
 		
 		fail();
 	}
@@ -157,6 +157,42 @@ public class EspetaculoTest {
 		List<Sessao> sessoes = ivete.criaSessoes(new LocalDate(2010, 01, 31), new LocalDate(2010, 01, 31), new LocalTime(17, 0), Periodicidade.SEMANAL);
 		
 		assertEquals(1 , sessoes.size());
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void erroInicioNulo() {
+		Espetaculo ivete = new Espetaculo();
+		
+		ivete.criaSessoes(null, new LocalDate(2010, 01, 01), new LocalTime(17, 0), Periodicidade.SEMANAL);
+		
+		fail();
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void erroFimNulo() {
+		Espetaculo ivete = new Espetaculo();
+		
+		ivete.criaSessoes(new LocalDate(2010, 01, 31), null, new LocalTime(17, 0), Periodicidade.SEMANAL);
+		
+		fail();
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void erroHorarioNulo() {
+		Espetaculo ivete = new Espetaculo();
+		
+		ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 31), null, Periodicidade.SEMANAL);
+		
+		fail();
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void erroPeriodicidadeNula() {
+		Espetaculo ivete = new Espetaculo();
+		
+		ivete.criaSessoes(new LocalDate(2010, 01, 01), new LocalDate(2010, 01, 31), new LocalTime(17, 0), null);
+		
+		fail();
 	}
 	
 	

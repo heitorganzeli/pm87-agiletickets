@@ -106,6 +106,8 @@ public class Espetaculo {
 	}
 			
 	private int calculaTotalDiasElegiveis(LocalDate inicio, LocalDate fim) {
+		if (inicio == null || fim == null)
+			throw new NullPointerException("inicio ou fim nulos");		
 		if (inicio.isAfter(fim))
 			throw new IllegalArgumentException("inicio maior que fim");
 
@@ -117,7 +119,9 @@ public class Espetaculo {
 	}
 	
 	private List<Sessao> criaSessoesPorPeriodoEIncremento (LocalDate inicio, LocalTime horario, int periodo, int incremento) {
-
+		if (inicio == null || horario == null)
+			throw new NullPointerException("inicio ou horario nulos");		
+		
 		List<Sessao> sessoes = new ArrayList<Sessao>();
 		
 		for (int i = 0; i < periodo; i += incremento) {
