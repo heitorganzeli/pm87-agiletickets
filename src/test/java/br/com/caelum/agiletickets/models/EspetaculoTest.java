@@ -195,5 +195,10 @@ public class EspetaculoTest {
 		fail();
 	}
 	
+	@Test
+	public void failTest() {
+		fail();
+	}
+	
 	
 }
