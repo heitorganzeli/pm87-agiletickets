@@ -1,6 +1,8 @@
 package br.com.caelum.agiletickets;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.Arrays;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
