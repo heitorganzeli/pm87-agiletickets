@@ -17,6 +17,7 @@ public class EstabelecimentoTest {
 
 	@BeforeClass
 	public static void abreBrowser() {
+		System.setProperty("webdriver.gecko.driver", "./geckodriver");
 		browser = new FirefoxDriver();
 	}
 
@@ -53,6 +54,7 @@ public class EstabelecimentoTest {
 		estabelecimentos.abreListagem();
 
 		estabelecimentos.adicioneEstabelecimento("Caelum", "");
+		
 
 		estabelecimentos.deveMostrarErro("O endereco não pode ser vazio");
 	}

@@ -40,7 +40,7 @@
 		
 		
 		<!-- Acceptance Test dependencies -->
-		<dependency org="org.seleniumhq.selenium" name="selenium-java" rev="2.44.0" conf="acceptance-test->default"/>
+		<dependency org="org.seleniumhq.selenium" name="selenium-java" rev="3.4.0" conf="acceptance-test->default"/>
 
 		<!-- Minify dependencies -->
 		<dependency org="com.yahoo.platform.yui" name="yuicompressor" rev="2.4.8" conf="minify->default" />

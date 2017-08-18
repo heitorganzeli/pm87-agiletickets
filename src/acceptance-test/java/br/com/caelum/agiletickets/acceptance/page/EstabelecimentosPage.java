@@ -28,6 +28,14 @@ public class EstabelecimentosPage {
 		form.findElement(By.name("estabelecimento.nome")).sendKeys(nome);
 		form.findElement(By.name("estabelecimento.endereco")).sendKeys(endereco);
 		form.submit();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("**************************pagina*****************\n" + driver.getPageSource());
+		
 	}
 
 	public void ultimaLinhaDeveConter(String nome, String endereco) {
