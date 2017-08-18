@@ -28,7 +28,7 @@ public class ReservaTest {
 	@Before
 	public void setUp() throws Exception {
 		PreencheBanco.main(new String[0]);
-		reserva = new ReservaPage(browser);
+
 		dado = new ReservaPage(browser);
 		quando = dado;
 		entao = dado;
