@@ -129,6 +129,8 @@ public class Espetaculo {
 
 			sessao.setInicio(inicio.plusDays(i).toDateTime(horario));
 			sessoes.add(sessao);
+			
+			
 		}
 		
 		return sessoes;
