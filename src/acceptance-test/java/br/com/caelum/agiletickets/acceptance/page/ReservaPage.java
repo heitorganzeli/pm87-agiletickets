@@ -15,6 +15,7 @@ public class ReservaPage {
 
 	private static final String BASE_URL = "http://localhost:8080";
 	private final WebDriver driver;
+	private String data;
 
 	public ReservaPage(WebDriver driver) {
 		this.driver = driver;
@@ -58,5 +59,17 @@ public class ReservaPage {
 		assertThat(message.getText(), containsString("" + valor));
 		
 	}
+
+	
+
+	public void apresentaPreco(int valor) {
+		verificaPreco(valor);
+	}
+
+	public void sessaoNaDataEIngressosReservados(String data, int quantidade) {
+		abreSessaoData(data);
+		reservaIngressos(quantidade);		
+	}
+
 
 }
